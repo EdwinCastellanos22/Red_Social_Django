@@ -1,0 +1,14 @@
+{% extends 'layout/layout.html' %}
+
+{% block content %}
+
+    <h1>Chats</h1>
+
+    {% for message in msg %}
+        {% if message.sender == user %}
+            {{ message.user.username }}
+        {% endif %}
+    {% endfor %}
+
+
+{% endblock  %}

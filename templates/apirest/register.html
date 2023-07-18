@@ -1,0 +1,75 @@
+{% extends 'layout/layout.html' %}
+{% load static %}
+{% block title %} Register {% endblock %}
+{% block head %}
+    <link rel="stylesheet" href="{% static 'css/register.css' %}">
+{% endblock  %}
+{% block content %}
+
+<div class="relative flex flex-col justify-center overflow-hidden mt-10">
+    <div class="w-full p-6 m-auto bg-white rounded-md shadow-2XL lg:max-w-lg">
+        <h1 class="text-3xl font-semibold text-center text-purple-700">R E G I S T E R</h1>
+        {% if errors %}
+            {% for field, error_list in errors.items %}
+                {% for error in error_list %}
+                    <div class="alert alert-error mb-2">
+                        <span>{{ field}}: {{ error }}</span>
+                    </div>
+                {% endfor %}
+            {% endfor %}
+        {% endif %}
+
+        <form class="space-y-4" method="post" action="{% url 'register' %}">
+            {% csrf_token %}
+
+            <div>
+                <label for="{{ form.username.id_for_label }}" class="label"><span class="text-base label-text">Username</span></label>
+                <input type="text" class="w-full input input-bordered input-primary" name="{{ form.username.name }}" id="{{ form.field1.id_for_label }}" autofocus required>
+                <label class="label">
+                    <span class="lable-text-alt">Requerido. 150 carácteres como máximo. Únicamente letras, dígitos y @/./+/-/_ </span>
+                </label>
+                {% if form.username.errors %}
+                    <p class="text-red-500 text-xs mt-1">{{ form.username.errors|join:", " }}</p>
+                {% endif %}
+            </div>
+
+            <div>
+                <label for="{{ form.email.id_for_label }}" class="label"><span class="text-base label-text">Email</span></label>
+                <input type="email" class="w-full input input-bordered input-primary" name="{{ form.email.name }}" id="{{ form.email.id_for_label }}" required>
+                {% if form.email.errors %}
+                    <p class="text-red-500 text-xs mt-1">{{ form.email.errors|join:", " }}</p>
+                {% endif %}
+            </div>
+
+            <div>
+                <label for="{{ form.password1.id_for_label }}" class="label"><span class="text-base label-text">Password</span></label>
+                <input type="password" class="w-full input input-bordered input-primary" name="{{ form.password1.name }}" id="{{ form.password1.id_for_label }}" required>
+                <label class="label">
+                    <span class="lable-text-alt">Su contraseña no puede asemejarse tanto a su otra información personal.</li><li>Su contraseña debe contener al menos 8 caracteres.</li><li>Su contraseña no puede ser una clave utilizada comúnmente.</li><li>Su contraseña no puede ser completamente numérica.</span>
+                </label>
+                {% if form.password1.errors %}
+                    <p class="text-red-500 text-xs mt-1">{{ form.password1.errors|join:", " }}</p>
+                {% endif %}
+            </div>
+
+            <div class="mb-4">
+                <label for="{{ form.password2.id_for_label }}" class="label"><span class="text-base label-text">Repeat Password</span></label>
+                <input type="password" class="w-full input input-bordered input-primary" name="{{ form.password2.name }}" id="{{ form.password2.id_for_label }}" required>
+                <label class="label">
+                    <span class="lable-text-alt">Para verificar, introduzca la misma contraseña anterior.</span>
+                </label>
+                {% if form.password2.errors %}
+                    <p class="text-red-500 text-xs mt-1">{{ form.password2.errors|join:", " }}</p>
+                {% endif %}
+            </div>
+
+            <div>
+                <button class="btn btn-primary text-black" type="submit">Register</button>
+            </div>
+
+        </form>
+        <span>Already have an account ?
+            <a href="/login/" class="text-blue-600 hover:text-blue-800 hover:underline">Login</a></span>
+    </div>
+</div>
+{% endblock %}

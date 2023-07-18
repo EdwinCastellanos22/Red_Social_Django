@@ -1,0 +1,44 @@
+{% extends 'layout/layout.html' %}
+{% load static %}
+{% block title %} Login {% endblock %}
+{% block head %}
+    <link rel="stylesheet" href="{% static 'css/login.css' %}">
+{% endblock  %}
+{% block content %}
+
+    {% if error %}
+        <div class="alert alert-error">
+            <svg xmlns="http://www.w3.org/2000/svg" class="stroke-current shrink-0 h-6 w-6" fill="none" viewBox="0 0 24 24"><path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M10 14l2-2m0 0l2-2m-2 2l-2-2m2 2l2 2m7-2a9 9 0 11-18 0 9 9 0 0118 0z" /></svg>
+            <span>Error! {{ error }}.</span>
+        </div>
+    {% endif %}
+
+    <div class="relative flex flex-col justify-center h-screen overflow-hidden">
+        <div class="w-full p-6 m-auto bg-white rounded-md shadow-md lg:max-w-lg">
+            <h1 class="text-3xl font-semibold text-center text-purple-700">L O G I N</h1>
+            <form class="space-y-4" method="post" action="{% url 'login' %}">
+                {% csrf_token %}
+                <div>
+                    <label class="label">
+                        <span class="text-base label-text">Username</span>
+                    </label>
+                    <input type="text" placeholder="Username" name="username" class="w-full input input-bordered input-primary" required/>
+                </div>
+                <div>
+                    <label class="label">
+                        <span class="text-base label-text">Password</span>
+                    </label>
+                    <input type="password" placeholder="Enter Password" name="password"
+                        class="w-full input input-bordered input-primary" required/>
+                </div>
+                <a href="#" class="text-xs text-gray-600 hover:underline hover:text-blue-600">Forget Password?</a>
+                <div>
+                    <button class="btn btn-block btn-primary text-black" type="submit">Login</button>
+                    
+                </div>
+            </form>
+            <div class="divider">OR</div>
+            <a class="btn btn-block btn-secondary text-black" href="/register/">Register</a>
+        </div>
+    </div>
+{% endblock %}

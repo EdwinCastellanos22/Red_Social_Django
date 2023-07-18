@@ -1,0 +1,85 @@
+{% load static %}
+<!DOCTYPE html>
+<html lang="en">
+
+<head>
+    <meta charset="UTF-8">
+    <meta http-equiv="X-UA-Compatible" content="IE=edge">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>{% block title %}{% endblock %}</title>
+    <link rel="stylesheet" href="{% static 'css/login.css' %}">
+    <link href="https://cdn.jsdelivr.net/npm/daisyui@3.2.1/dist/full.css" rel="stylesheet" type="text/css" />
+    <script src="https://cdn.tailwindcss.com"></script>
+    <script src="https://use.fontawesome.com/fe459689b4.js"></script>
+    <link href="https://unpkg.com/aos@2.3.1/dist/aos.css" rel="stylesheet">
+    {% block  head %}{% endblock  %}
+
+
+</head>
+
+<body>
+    <div class="navbar bg-base-100" data-aos="fade-up">
+        <div class="flex-1">
+          <a href="/" class="btn btn-ghost normal-case text-xl">Mercasocial</a>
+        </div>
+        {% if user.is_authenticated %}
+            <div class="flex-none">
+
+            <div class="dropdown dropdown-end">
+                <label tabindex="0" class="btn btn-ghost btn-circle avatar">
+                <div class="w-10 rounded-full">
+                    <img src="{{ user.profile.image.url }}" />
+                </div>
+                </label>
+                <ul tabindex="0" class="menu menu-sm dropdown-content mt-3 z-[1] p-2 shadow bg-base-100 rounded-box w-52">
+                <li>
+                    <a class="justify-between">
+                    Profile
+                    </a>
+                </li>
+                <li><!-- The button to open modal -->
+                    <label for="my_modal_6" class="">New Post</label>
+                    
+                    
+                </li>
+                <li><a href="{% url 'chat' %}">Chat</a></li>
+                <li><a href="{% url 'logout' %}">Logout</a></li>
+                </ul>
+            </div>
+            {% endif%}
+        </div>
+      </div>
+      <!-- Put this part before </body> tag -->
+      <input type="checkbox" id="my_modal_6" class="modal-toggle" />
+      <div class="modal">
+        <div class="modal-box">
+            <form method="post">
+                {% csrf_token %}
+                <label for="{{ form.image.id_for_label }}">Imagen</label>
+                <input type="file" id="{{ form.image.id_for_label }}" name="{{ form.image.name }}" class="file-input file-input-bordered w-full max-w-xs" required/>
+                <input type="text" class="w-full input input-bordered input-primary my-2" name="{{ form.title.name }}" placeholder="Title" required>
+                <input type="text" class="w-full input input-bordered input-primary my-2" name="{{ form.content.name }}" placeholder="Content" required>
+                <button type="submit" class="btn btn-block btn-outline">Post</button>
+            </form>
+          <div class="modal-action">
+            <label for="my_modal_6" class="btn">Close!</label>
+          </div>
+        </div>
+      </div>
+    {% if messages %}
+        {% for message in messages %}
+            <div class="alert alert-{{message.tags}} mb-2">
+            <span>{{ message }}</span>
+            </div>
+        {% endfor %}
+    {% endif %}
+    {% block content %}
+
+    {% endblock %}
+
+    {% block script %}{% endblock  %}
+    <script src="https://unpkg.com/aos@2.3.1/dist/aos.js"></script>
+    <script src="{% static 'js/layout.js' %}"></script>
+</body>
+
+</html>
