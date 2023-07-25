@@ -1,3 +1,4 @@
 .env
 Dockerfile
 firebase.txt
+API_REST/setting.py

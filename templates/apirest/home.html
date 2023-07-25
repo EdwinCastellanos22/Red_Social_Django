@@ -3,9 +3,9 @@
 {% block title %} MercaSocial {% endblock %}
 {% block content %}
 
-<div class="grid grid-cols-3 place-content-between">
+<div class="grid grid-cols-3 max-[500px]:grid-cols-1">
     {% for post in posts %}
-    <div class="card bg-base-100 w-96 rounded-md shadow-2xl m-10" data-aos="fade-down">
+    <div class="card bg-base-100 w-96 rounded-md shadow-2xl max-[450px]:m-5 max-[400px]:w-80" data-aos="fade-down">
         <img src="{{ post.image.url }}" alt="Imagen de la publicación" class="w-full h-48 object-cover rounded-t-md">
         <div class="p-4">
             <div class="flex items-center mb-4">

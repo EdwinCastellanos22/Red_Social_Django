@@ -13,25 +13,38 @@
     <script src="https://use.fontawesome.com/fe459689b4.js"></script>
     <link href="https://unpkg.com/aos@2.3.1/dist/aos.css" rel="stylesheet">
     {% block  head %}{% endblock  %}
-
+    <link rel="shortcut icon" href="{% static 'images/icon.ico' %}" type="image/x-icon">
 
 </head>
 
 <body>
-    <div class="navbar bg-base-100" data-aos="fade-up">
+    <div class="navbar bg-base-100 w-full" data-aos="fade-up">
         <div class="flex-1">
           <a href="/" class="btn btn-ghost normal-case text-xl">Mercasocial</a>
         </div>
         {% if user.is_authenticated %}
             <div class="flex-none">
 
-            <div class="dropdown dropdown-end">
+            <ul class="menu menu-horizontal px-1 min-[600px]:hidden">
+                <li>
+                    <label for="my_modal_6">
+                        <svg xmlns="http://www.w3.org/2000/svg" height="1em" viewBox="0 0 512 512"><!--! Font Awesome Free 6.4.0 by @fontawesome - https://fontawesome.com License - https://fontawesome.com/license (Commercial License) Copyright 2023 Fonticons, Inc. --><path d="M256 512A256 256 0 1 0 256 0a256 256 0 1 0 0 512zM232 344V280H168c-13.3 0-24-10.7-24-24s10.7-24 24-24h64V168c0-13.3 10.7-24 24-24s24 10.7 24 24v64h64c13.3 0 24 10.7 24 24s-10.7 24-24 24H280v64c0 13.3-10.7 24-24 24s-24-10.7-24-24z"/></svg>
+                    </label>
+                </li>
+                <li>
+                    <a href="{% url 'logout' %}">
+                        <svg xmlns="http://www.w3.org/2000/svg" height="1em" viewBox="0 0 512 512"><!--! Font Awesome Free 6.4.0 by @fontawesome - https://fontawesome.com License - https://fontawesome.com/license (Commercial License) Copyright 2023 Fonticons, Inc. --><path d="M377.9 105.9L500.7 228.7c7.2 7.2 11.3 17.1 11.3 27.3s-4.1 20.1-11.3 27.3L377.9 406.1c-6.4 6.4-15 9.9-24 9.9c-18.7 0-33.9-15.2-33.9-33.9l0-62.1-128 0c-17.7 0-32-14.3-32-32l0-64c0-17.7 14.3-32 32-32l128 0 0-62.1c0-18.7 15.2-33.9 33.9-33.9c9 0 17.6 3.6 24 9.9zM160 96L96 96c-17.7 0-32 14.3-32 32l0 256c0 17.7 14.3 32 32 32l64 0c17.7 0 32 14.3 32 32s-14.3 32-32 32l-64 0c-53 0-96-43-96-96L0 128C0 75 43 32 96 32l64 0c17.7 0 32 14.3 32 32s-14.3 32-32 32z"/></svg>
+                    </a>
+                </li>
+            </ul>
+
+            <div class="dropdown dropdown-end max-[600px]:hidden">
                 <label tabindex="0" class="btn btn-ghost btn-circle avatar">
                 <div class="w-10 rounded-full">
                     <img src="{{ user.profile.image.url }}" />
                 </div>
                 </label>
-                <ul tabindex="0" class="menu menu-sm dropdown-content mt-3 z-[1] p-2 shadow bg-base-100 rounded-box w-52">
+                <ul tabindex="0" class="menu menu-sm dropdown-content mt-3 z-[1] p-2 shadow bg-base-100 rounded-box w-52 mb-10">
                 <li>
                     <a class="justify-between">
                     Profile
@@ -53,16 +66,16 @@
       <input type="checkbox" id="my_modal_6" class="modal-toggle" />
       <div class="modal">
         <div class="modal-box">
-            <form method="post">
+            <form method="post" action="{% url 'newPost' %}" enctype="multipart/form-data">
                 {% csrf_token %}
-                <label for="{{ form.image.id_for_label }}">Imagen</label>
-                <input type="file" id="{{ form.image.id_for_label }}" name="{{ form.image.name }}" class="file-input file-input-bordered w-full max-w-xs" required/>
-                <input type="text" class="w-full input input-bordered input-primary my-2" name="{{ form.title.name }}" placeholder="Title" required>
-                <input type="text" class="w-full input input-bordered input-primary my-2" name="{{ form.content.name }}" placeholder="Content" required>
+                <label for="imagenP">Imagen</label>
+                <input type="file" id="imagenP" name="image" class="file-input file-input-bordered w-full max-w-xs" required/>
+                <input type="text" class="w-full input input-bordered input-primary my-2" name="title" placeholder="Title" required>
+                <input type="text" class="input input-bordered input-primary input-lg w-full  my-2" name="content" placeholder="Content" required>
                 <button type="submit" class="btn btn-block btn-outline">Post</button>
             </form>
           <div class="modal-action">
-            <label for="my_modal_6" class="btn">Close!</label>
+            <label for="my_modal_6" class="btn btn-secondary">Cancel</label>
           </div>
         </div>
       </div>

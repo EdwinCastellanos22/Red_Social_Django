@@ -5,21 +5,41 @@ from .forms import PostForm, RegisterForm
 from django.urls import reverse_lazy
 from django.contrib.auth import login, authenticate, logout
 from django.contrib import messages
+import pyrebase
+
+
+#Settings Firebase
+config = {
+    "apiKey": "AIzaSyA2Ig4L5cSJHIgE1UCWj6y5Iizu5w_aJpQ",
+    "authDomain": "django-api-730e4.firebaseapp.com",
+    "projectId": "django-api-730e4",
+    "storageBucket": "django-api-730e4.appspot.com",
+    "messagingSenderId": "611779181554",
+    "appId": "1:611779181554:web:d6839ce3da55ac88be496b",
+    "measurementId": "G-L0RP3PSEJV",
+    "databaseURL": "https://django-api-730e4-default-rtdb.firebaseio.com/"
+}
+firebase= pyrebase.initialize_app(config)
+auth= firebase.auth()
+database= firebase.database()
+storage= firebase.storage()
 
 # Create your views here.
-class HomeView(CreateView):
-    model= Post
-    form_class= PostForm
-    template_name= "apirest/home.html"
-    success_url= reverse_lazy('/')
-
-    def get_context_data(self, **kwargs):
-        context = super().get_context_data(**kwargs)
-        context["posts"] = Post.objects.all()
-        context["comments"] = Comment.objects.all()
-        context['profile']= Profile.objects.get(user = self.request.user)
-        context['postForm']= PostForm()
-        return context
+def HomeView(request):
+    
+    if request.method == 'POST':
+        form= PostForm(request.POST, request.FILES)
+        form.user= request.user
+        if form.is_valid():
+            form.save()
+            messages.success(request, "Success!")
+            return redirect('/')
+    else:
+        form = PostForm()
+    return render(request, 'apirest/home.html', {
+        "posts": Post.objects.all(),
+        'comments': Comment.objects.all(),
+    })
     
 
 def Login(request):
@@ -90,7 +110,7 @@ def Dislike(request, post_id):
     
     return redirect('/')
 
-def Chat(request):
+def Chats(request):
     messages_chat= Message.objects.filter(sender= request.user)
     chats= Message.objects.all()
 
@@ -99,3 +119,16 @@ def Chat(request):
     }
 
     return render(request, 'apirest/chat.html', ctx)
+
+def newPost(request):
+    if request.method == 'POST' and request.FILES['image']:
+        post = Post()
+        file= request.FILES['image']
+        post.image= file
+        post.title = request.POST['title']
+        post.content= request.POST['content']
+        post.user= request.user
+        post.save()
+        storage.child('images/'+file.name).put('media/post/'+file.name)
+        messages.success(request, f"Posted <<{request.POST['title']}>>")
+    return redirect('/')
