@@ -1,9 +1,9 @@
 from django.urls import path
-<<<<<<< HEAD
-from .views import HomeView, Login, Logout, RegisterUser,Chats, NewComment, Like, Dislike
-=======
+# <<<<<<< HEAD
+# from .views import HomeView, Login, Logout, RegisterUser,Chats, NewComment, Like, Dislike
+# =======
 from .views import HomeView, Login, Logout, RegisterUser,Chats, NewComment, Like, Dislike, newPost
->>>>>>> 18bae8e79b277981680ffd2d1772896169ae1008
+# >>>>>>> 18bae8e79b277981680ffd2d1772896169ae1008
 from django.contrib.auth.decorators import login_required
 
 urlpatterns = [
@@ -14,10 +14,9 @@ urlpatterns = [
     path("comment/<int:pid>", NewComment, name="comment"),
     path("like/<int:post_id>", Like, name="like_post"),
     path("dislike/<int:post_id>", Dislike, name="dislike_post"),
-<<<<<<< HEAD
-    path("chat/", Chats, name="chat")
-=======
+# <<<<<<< HEAD
+# =======
     path("chat/", Chats, name="chat"),
     path("newPost/", newPost, name="newPost")
->>>>>>> 18bae8e79b277981680ffd2d1772896169ae1008
+# >>>>>>> 18bae8e79b277981680ffd2d1772896169ae1008
 ]

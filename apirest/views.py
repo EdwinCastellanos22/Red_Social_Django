@@ -7,17 +7,6 @@ from django.contrib.auth import login, authenticate, logout
 from django.contrib import messages
 import pyrebase
 
-
-<<<<<<< HEAD
-    def get_context_data(self, **kwargs):
-        context = super().get_context_data(**kwargs)
-        context["posts"] = Post.objects.all()
-        context["comments"] = Comment.objects.all()
-        context['profile']= Profile.objects.get(user = self.request.user)
-        context['postForm']= PostForm()
-        return context
-
-=======
 #Settings Firebase
 config = {
     "apiKey": "AIzaSyA2Ig4L5cSJHIgE1UCWj6y5Iizu5w_aJpQ",
@@ -36,7 +25,7 @@ storage= firebase.storage()
 
 # Create your views here.
 def HomeView(request):
-    
+
     if request.method == 'POST':
         form= PostForm(request.POST, request.FILES)
         form.user= request.user
@@ -50,8 +39,8 @@ def HomeView(request):
         "posts": Post.objects.all(),
         'comments': Comment.objects.all(),
     })
-    
->>>>>>> 18bae8e79b277981680ffd2d1772896169ae1008
+
+# >>>>>>> 18bae8e79b277981680ffd2d1772896169ae1008
 
 def Login(request):
     if request.method == 'POST':
@@ -140,6 +129,6 @@ def newPost(request):
         post.content= request.POST['content']
         post.user= request.user
         post.save()
-        storage.child('images/'+file.name).put('media/post/'+file.name)
+        storage.child('images/'+file.name).put('home/pempi22/Project/Red_Social_Django/media/post/'+file.name)
         messages.success(request, f"Posted <<{request.POST['title']}>>")
     return redirect('/')
