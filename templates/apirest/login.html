@@ -13,7 +13,7 @@
         </div>
     {% endif %}
 
-    <div class="relative flex flex-col justify-center h-screen overflow-hidden">
+    <div class="relative flex flex-col justify-center h-screen overflow-hidden max-[450px]:mx-10">
         <div class="w-full p-6 m-auto bg-white rounded-md shadow-md lg:max-w-lg">
             <h1 class="text-3xl font-semibold text-center text-purple-700">L O G I N</h1>
             <form class="space-y-4" method="post" action="{% url 'login' %}">
@@ -34,7 +34,7 @@
                 <a href="#" class="text-xs text-gray-600 hover:underline hover:text-blue-600">Forget Password?</a>
                 <div>
                     <button class="btn btn-block btn-primary text-black" type="submit">Login</button>
-                    
+
                 </div>
             </form>
             <div class="divider">OR</div>

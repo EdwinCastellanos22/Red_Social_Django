@@ -1,6 +1,6 @@
 {% load static %}
 <!DOCTYPE html>
-<html lang="en">
+<html lang="es">
 
 <head>
     <meta charset="UTF-8">
@@ -17,7 +17,7 @@
 
 </head>
 
-<body>
+<body class='relative'>
     <div class="navbar bg-base-100" data-aos="fade-up">
         <div class="flex-1">
           <a href="/" class="btn btn-ghost normal-case text-xl">Mercasocial</a>
@@ -25,13 +25,18 @@
         {% if user.is_authenticated %}
             <div class="flex-none">
 
-            <div class="dropdown dropdown-end">
+            <ul class="menu menu-horizontal px-1 min-[600px]:hidden">
+                <li><label for='my_modal_6'>New Post</label></li>
+                <li><a href="{% url 'logout' %}">Logout</a></li>
+            </ul>
+
+            <div class="dropdown dropdown-end max-[600px]:hidden">
                 <label tabindex="0" class="btn btn-ghost btn-circle avatar">
                 <div class="w-10 rounded-full">
                     <img src="{{ user.profile.image.url }}" />
                 </div>
                 </label>
-                <ul tabindex="0" class="menu menu-sm dropdown-content mt-3 z-[1] p-2 shadow bg-base-100 rounded-box w-52">
+                <ul tabindex="0" class="menu menu-sm dropdown-content mt-3 z-[1] p-2 shadow bg-base-100 rounded-box w-52 absolute">
                 <li>
                     <a class="justify-between">
                     Profile
@@ -39,8 +44,8 @@
                 </li>
                 <li><!-- The button to open modal -->
                     <label for="my_modal_6" class="">New Post</label>
-                    
-                    
+
+
                 </li>
                 <li><a href="{% url 'chat' %}">Chat</a></li>
                 <li><a href="{% url 'logout' %}">Logout</a></li>

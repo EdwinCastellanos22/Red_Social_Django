@@ -16,7 +16,7 @@ SECRET_KEY = 'django-insecure-1$2mc-rgpr*a5w2!7fqy9!)huqmw&$huya*x-ns0+=0$*o*d+r
 # SECURITY WARNING: don't run with debug turned on in production!
 DEBUG = True
 
-ALLOWED_HOSTS = []
+ALLOWED_HOSTS = ['pempi22.pythonanywhere.com']
 
 
 # Application definition
@@ -47,7 +47,7 @@ ROOT_URLCONF = 'API_REST.urls'
 TEMPLATES = [
     {
         'BACKEND': 'django.template.backends.django.DjangoTemplates',
-        'DIRS': ['templates/'],
+        'DIRS': [os.path.join(BASE_DIR, 'templates/')],
         'APP_DIRS': True,
         'OPTIONS': {
             'context_processors': [
@@ -68,12 +68,8 @@ WSGI_APPLICATION = 'API_REST.wsgi.application'
 
 DATABASES = {
     'default': {
-        'ENGINE': 'django.db.backends.postgresql',
-        'NAME': 'apirest',
-        'USER': 'pempi',
-        'PASSWORD': 'pempi0010',
-        'HOST': '127.0.0.1',
-        'PORT': '5432',
+        'ENGINE': 'django.db.backends.sqlite3',
+        'NAME': os.path.join(BASE_DIR, 'db.sqlite3'),
     }
 }
 
@@ -114,7 +110,7 @@ USE_TZ = True
 
 STATIC_URL = 'static/'
 STATICFILES_DIRS = (os.path.join(BASE_DIR,'static'),)
-# STATIC_ROOT = os.path.join(BASE_DIR, 'static/')
+STATIC_ROOT = 'home/pempi22/Project/Red_Social_Django/static'
 MEDIA_URL = '/media/'
 MEDIA_ROOT = os.path.join(BASE_DIR, 'media')
 # Default primary key field type

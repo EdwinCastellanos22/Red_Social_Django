@@ -1,5 +1,5 @@
 from django.urls import path
-from .views import HomeView, Login, Logout, RegisterUser,Chat, NewComment, Like, Dislike
+from .views import HomeView, Login, Logout, RegisterUser,Chats, NewComment, Like, Dislike
 from django.contrib.auth.decorators import login_required
 
 urlpatterns = [
@@ -10,5 +10,5 @@ urlpatterns = [
     path("comment/<int:pid>", NewComment, name="comment"),
     path("like/<int:post_id>", Like, name="like_post"),
     path("dislike/<int:post_id>", Dislike, name="dislike_post"),
-    path("chat/", Chat, name="chat")
+    path("chat/", Chats, name="chat")
 ]

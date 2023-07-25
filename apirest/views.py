@@ -20,7 +20,7 @@ class HomeView(CreateView):
         context['profile']= Profile.objects.get(user = self.request.user)
         context['postForm']= PostForm()
         return context
-    
+
 
 def Login(request):
     if request.method == 'POST':
@@ -67,30 +67,30 @@ def NewComment(request, pid):
 def Like(request, post_id):
     post= get_object_or_404(Post, post_id= post_id)
     user= request.user
-    
+
     if user in post.likes.all():
         post.likes.remove(user)
     else:
         if user in post.dislikes.all():
             post.dislikes.remove(user)
         post.likes.add(user)
-    
+
     return redirect('/')
 
 def Dislike(request, post_id):
     post= get_object_or_404(Post, post_id= post_id)
     user= request.user
-    
+
     if user in post.dislikes.all():
         post.dislikes.remove(user)
     else:
         if user in post.likes.all():
             post.likes.remove(user)
         post.dislikes.add(user)
-    
+
     return redirect('/')
 
-def Chat(request):
+def Chats(request):
     messages_chat= Message.objects.filter(sender= request.user)
     chats= Message.objects.all()
 
