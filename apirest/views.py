@@ -129,6 +129,26 @@ def newPost(request):
         post.content= request.POST['content']
         post.user= request.user
         post.save()
-        storage.child('images/'+file.name).put('home/pempi22/Project/Red_Social_Django/media/post/'+file.name)
+        storage.child('images/'+file.name).put(file.name)
         messages.success(request, f"Posted <<{request.POST['title']}>>")
+    return redirect('/')
+
+def newImageProfile(request):
+    if request.method == 'POST' and request.FILES['image']:
+        file= request.FILES['image']
+        profile= Profile.objects.get(user=request.user)
+        profile.image= file
+        profile.save()
+        messages.success(request, 'Imagen Cambiada Exitosamente')
+    return redirect('/')
+
+def settingProfile(request):
+    user = User.objects.get(id=request.user.id)
+    if request.method == 'POST':
+        user.first_name= request.POST['first_name']
+        user.last_name= request.POST['last_name']
+        user.username= request.POST['username']
+        user.email= request.POST['email']
+        user.save()
+        messages.success(request, 'Usuario Actualizado!')
     return redirect('/')

@@ -2,7 +2,7 @@ from django.urls import path
 # <<<<<<< HEAD
 # from .views import HomeView, Login, Logout, RegisterUser,Chats, NewComment, Like, Dislike
 # =======
-from .views import HomeView, Login, Logout, RegisterUser,Chats, NewComment, Like, Dislike, newPost
+from .views import HomeView, Login, Logout, RegisterUser,Chats, NewComment, Like, Dislike, newPost, newImageProfile, settingProfile
 # >>>>>>> 18bae8e79b277981680ffd2d1772896169ae1008
 from django.contrib.auth.decorators import login_required
 
@@ -17,6 +17,8 @@ urlpatterns = [
 # <<<<<<< HEAD
 # =======
     path("chat/", Chats, name="chat"),
-    path("newPost/", newPost, name="newPost")
+    path("newPost/", newPost, name="newPost"),
+    path("newImageProfile/", newImageProfile, name="imageProfile"),
+    path("updateUser/", settingProfile, name="updateUser"),
 # >>>>>>> 18bae8e79b277981680ffd2d1772896169ae1008
 ]

@@ -18,7 +18,7 @@
 </head>
 
 <body>
-    <div class="navbar bg-base-100" data-aos="fade-up">
+    <div class="navbar bg-base-100 w-full" data-aos="fade-up">
         <div class="flex-1">
           <a href="/" class="btn btn-ghost normal-case text-xl">Mercasocial</a>
         </div>
@@ -27,12 +27,19 @@
 
             <ul class="menu menu-horizontal px-1 min-[600px]:hidden">
                 <li>
-                    <label for="my_modal_6">
+                    <label for="modal_user" class="btn btn-ghost btn-circle avatar">
+                        <div class="w-10 rounded-full">
+                            <img src="{{ user.profile.image.url }}" alt="user_imagen_profile">
+                        </div>
+                    </label>
+                </li>
+                <li>
+                    <label for="my_modal_6" class="mt-2">
                         <svg xmlns="http://www.w3.org/2000/svg" height="1em" viewBox="0 0 512 512"><!--! Font Awesome Free 6.4.0 by @fontawesome - https://fontawesome.com License - https://fontawesome.com/license (Commercial License) Copyright 2023 Fonticons, Inc. --><path d="M256 512A256 256 0 1 0 256 0a256 256 0 1 0 0 512zM232 344V280H168c-13.3 0-24-10.7-24-24s10.7-24 24-24h64V168c0-13.3 10.7-24 24-24s24 10.7 24 24v64h64c13.3 0 24 10.7 24 24s-10.7 24-24 24H280v64c0 13.3-10.7 24-24 24s-24-10.7-24-24z"/></svg>
                     </label>
                 </li>
                 <li>
-                    <a href="{% url 'logout' %}">
+                    <a href="{% url 'logout' %}" class="mt-2">
                         <svg xmlns="http://www.w3.org/2000/svg" height="1em" viewBox="0 0 512 512"><!--! Font Awesome Free 6.4.0 by @fontawesome - https://fontawesome.com License - https://fontawesome.com/license (Commercial License) Copyright 2023 Fonticons, Inc. --><path d="M377.9 105.9L500.7 228.7c7.2 7.2 11.3 17.1 11.3 27.3s-4.1 20.1-11.3 27.3L377.9 406.1c-6.4 6.4-15 9.9-24 9.9c-18.7 0-33.9-15.2-33.9-33.9l0-62.1-128 0c-17.7 0-32-14.3-32-32l0-64c0-17.7 14.3-32 32-32l128 0 0-62.1c0-18.7 15.2-33.9 33.9-33.9c9 0 17.6 3.6 24 9.9zM160 96L96 96c-17.7 0-32 14.3-32 32l0 256c0 17.7 14.3 32 32 32l64 0c17.7 0 32 14.3 32 32s-14.3 32-32 32l-64 0c-53 0-96-43-96-96L0 128C0 75 43 32 96 32l64 0c17.7 0 32 14.3 32 32s-14.3 32-32 32z"/></svg>
                     </a>
                 </li>
@@ -77,6 +84,64 @@
           <div class="modal-action">
             <label for="my_modal_6" class="btn btn-secondary">Cancel</label>
           </div>
+        </div>
+      </div>
+
+      <!-- Modal Setting User -->
+      <input type="checkbox" id="modal_user" class="modal-toggle">
+      <div class="modal">
+        <div class="modal-box">
+            <h1 class="text-2xl">Account Setting</h1>
+            <div class="divider"></div>
+            <div class="hero w-32">
+                <div class="hero-content grid grid-cols-2">
+
+                        <img src="{{ user.profile.image.url }}" alt="" class="max-w-sm rounded-lg shadow-2xl">
+
+                    <div class="ml-[190px]">
+                        <h1 class="text-xl">Profile Photo</h1>
+                        <label for="label-photo" class="btn btn-secondary">Upload</button>
+                    </div>
+                    <!-- Modal Imagen -->
+                    <input type="checkbox" id="label-photo" class="modal-toggle">
+                    <div class="modal">
+                        <div class="modal-box">
+                            <form action="{% url 'imageProfile' %}" method="post" enctype="multipart/form-data">
+                                {% csrf_token %}
+                                <input type="file" name="image" id="imagen">
+                                <button type="submit" class="btn btn-accent mt-2">Guardar</button>
+                            </form>
+                        </div>
+                        <div class="modal-action">
+                            <label for="label-photo" class="btn btn-block">X</label>
+                        </div>
+                    </div>
+                </div>
+            </div>
+            <div class="divider"></div>
+            <form action="{% url 'updateUser' %}" method="post" class="grid grid-cols-2">
+                {% csrf_token %}
+                <div class="">
+                    <label for="first_name">First Name</label>
+                    <input type="text" name="first_name" id="first_name" value="{{ user.first_name }}" class="w-32 input input-bordered">
+                </div>
+                <div class="">
+                    <label for="last_name">Last Name</label>
+                    <input type="text" name="last_name" id="last_name" value="{{ user.last_name }}" class="w-32 input input-bordered">
+                </div>
+                <div class="">
+                    <label for="username">Username</label>
+                    <input type="text" name="username" id="username" value="{{ user.username }}" class="w-32 input input-bordered" minlength="8">
+                </div>
+                <div class="">
+                    <label for="email">Email</label><br>
+                    <input type="email" name="email" id="email" value="{{ user.email }}" class="w-32 input input-bordered">
+                </div>
+                <button type="submit" class="btn btn-accent mt-2">Guardar Cambios</button>
+            </form>
+        </div>
+        <div class="modal-action">
+            <label for="modal_user" class="btn btn-">Cancel</label>
         </div>
       </div>
     {% if messages %}
